@@ -1,11 +1,11 @@
-@extends( config('%%crudNameSingular%%.layout') )
+@extends( config('amazo.layout') )
 
-@section( config('%%crudNameSingular%%.section') )
+@section( config('amazo.section') )
 
-    <h1><i class="fa fa-money fa-fw"></i> {{ config('%%crudNameSingular%%.title', 'Amazo') }}
+    <h1><i class="fa fa-money fa-fw"></i> {{ config('amazo.title', 'Amazo') }}
     <div class="btn-group pull-right" role="group" aria-label="..."> 
       
-        <a href="{{ route('%%crudNameSingular%%.create') }}">
+        <a href="{{ route('amazo.create') }}">
         <button type="button" class="btn btn-info">
           <i class="fa fa-plus fa-fw"></i> 
           <span class="hidden-xs hidden-sm">Add New Amazo</span>
@@ -15,31 +15,37 @@
     </h1>
 
     <div class="table">
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Name</th><th>Slug</th><th>Notes</th><th>Actions</th>
+                    <th>Name</th><th class="hidden-xs hidden-sm">Slug</th><th class="hidden-xs hidden-sm">Notes</th><th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach($amazo as $item)
+            @forelse($amazo as $item)
                 <tr>
-                    <td><a href="{{ url('amazo', $item->id) }}">{{ $item->name }}</a></td><td>{{ $item->slug }}</td><td>{{ $item->notes }}</td>
+                    <td>
+                      <a href="{{ url('amazo', $item->id) }}">{{ $item->name }}</a>
+                    </td>
+
+                    <td class="hidden-xs hidden-sm">{{ $item->slug }}</td>
+
+                    <td class="hidden-xs hidden-sm">{{ $item->notes }}</td>
                 
                     <td>
-                        <a href="{{ route('%%crudNameSingular%%.show', $item->id) }}">
+                        <a href="{{ route('amazo.show', $item->id) }}">
                           <button type="button" class="btn btn-primary btn-xs">
                           <i class="fa fa-search fa-fw"></i> 
                           <span class="hidden-xs hidden-sm">View</span>
                           </button></a>
 
-                        <a href="{{ route('%%crudNameSingular%%.edit', $item->id) }}">
+                        <a href="{{ route('amazo.edit', $item->id) }}">
                           <button type="button" class="btn btn-default btn-xs">
                           <i class="fa fa-pencil fa-fw"></i> 
                           <span class="hidden-xs hidden-sm">Edit</span>
                           </button></a>
 
-                        {!! Form::open(['method'=>'delete','route'=> ['%%crudNameSingular%%.destroy',$item->id], 'style' => 'display:inline']) !!}
+                        {!! Form::open(['method'=>'delete','route'=> ['amazo.destroy',$item->id], 'style' => 'display:inline']) !!}
                           <button type="submit" class="btn btn-danger btn-xs">
                           <i class="fa fa-trash-o fa-lg"></i> 
                           <span class="hidden-xs hidden-sm">Delete</span>

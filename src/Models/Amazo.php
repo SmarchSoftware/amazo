@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Smarch\Amazo\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class Amazo extends Model
      *
      * @var string
      */
-    protected $table = 'amazos';
+    protected $table = 'damage_types';
 
     /**
      * Attributes that should be mass-assignable.

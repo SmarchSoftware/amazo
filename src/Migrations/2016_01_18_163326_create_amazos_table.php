@@ -13,12 +13,12 @@ class CreateAmazosTable extends Migration
     public function up()
     {
         
-            Schema::create('amazos', function(Blueprint $table) {
+            Schema::create('damage_types', function(Blueprint $table) {
                 $table->increments('id');
-                $table->string('name');
-$table->string('slug');
-$table->string('notes');
-$table->boolean('enabled');
+                $table->string('name')->required();
+                $table->string('slug')->required();
+                $table->string('notes');
+                $table->boolean('enabled');
 
                 $table->timestamps();
             });
@@ -32,7 +32,7 @@ $table->boolean('enabled');
      */
     public function down()
     {
-        Schema::drop('amazos');
+        Schema::drop('damage_types');
     }
 
 }

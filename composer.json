@@ -1,0 +1,24 @@
+{
+    "name": "smarch/amazo",
+    "description": "A damage-type admin package for in-game management",
+    "type": "package",
+    "homepage": "https://github.com/SmarchSoftware/amazo",
+    "keywords": ["game damage", "damage types", "watchtower", "laravel"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Smarch Software",
+            "email": "packages@smarchsoft.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "laravel/framework": "~5.1",
+        "laravelcollective/html": "~5.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Smarch\\Amazo\\": "src/"
+        }
+    }
+}

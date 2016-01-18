@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Smarch\Amazo\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
-use App\Amazo;
-use App\Http\Controllers\Requests\StoreRequest;
-use App\Http\Controllers\Requests\UpdateRequest;
+use Smarch\Amazo\Models\Amazo;
+use Smarch\Amazo\Requests\StoreRequest;
+use Smarch\Amazo\Requests\UpdateRequest;
 
 class AmazoController extends Controller
 {
@@ -21,7 +21,8 @@ class AmazoController extends Controller
      * @param  [string] $permission
      * @return [boolean]
      */
-    protected function checkAccess($permission) {
+    protected function checkAccess($permission)
+    {
         $result = false;
 
         $driver = config('amazo.acl.driver');
@@ -45,10 +46,10 @@ class AmazoController extends Controller
     public function index()
     {
         if ( config('amazo.acl.enable') && ( ! $this->checkAccess( config('amazo.acl.index') ) ) ) {
-            return view( config('amazo.views.unauthorized'), [ 'message' => 'view Amazo list' ]);
+            return view( config('amazo.views.unauthorized'), [ 'message' => 'view damage types list' ]);
         }
 
-        $amazo = Amazo::orderBy('base_value')->paginate( config('amazo.pagination', 15) );
+        $amazo = Amazo::paginate( config('amazo.pagination', 15) );
         return view( config('amazo.views.index'), compact('amazo') );
     }
 
@@ -60,7 +61,7 @@ class AmazoController extends Controller
     public function create()
     {
         if ( config('amazo.acl.enable') && ( ! $this->checkAccess( config('amazo.acl.create') ) ) ) {
-            return view( config('amazo.views.unauthorized'), [ 'message' => 'create new amazo' ]);
+            return view( config('amazo.views.unauthorized'), [ 'message' => 'create new damage type' ]);
         }
 
         return view(  config('amazo.views.create') );
@@ -75,14 +76,14 @@ class AmazoController extends Controller
     {
         if ( config('amazo.acl.enable') && ( ! $this->checkAccess( config('amazo.acl.create') ) ) ) {
             $level = "danger";
-            $message = "You are not permitted to create amazo";
+            $message = "You are not permitted to create damage types";
             return redirect()->route('amazo.index')
                 ->with( ['flash' => ['message' => $message, 'level' =>  $level] ] );
         }
         
         Amazo::create($request->all());
         $level = "success";
-        $message = "<i class='fa fa-check-square-o fa-1x'></i> Success! amazo created.";
+        $message = "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage type created.";
         
         return redirect()->route('amazo.index')
                 ->with( ['flash' => ['message' => $message, 'level' =>  $level] ] );
@@ -98,7 +99,7 @@ class AmazoController extends Controller
     public function show($id)
     {
         if ( config('amazo.acl.enable') && ( ! $this->checkAccess( config('amazo.acl.show') ) ) ) {
-            return view( config('amazo.views.unauthorized'), [ 'message' => 'view existing amazo types' ]);
+            return view( config('amazo.views.unauthorized'), [ 'message' => 'view existing damage types' ]);
         }
 
         $resource = Amazo::findOrFail($id);
@@ -116,7 +117,7 @@ class AmazoController extends Controller
     public function edit($id)
     {
         if ( config('amazo.acl.enable') && ( ! $this->checkAccess( config('amazo.acl.edit') ) ) ) {
-            return view( config('amazo.views.unauthorized'), [ 'message' => 'edit existing amazo types' ]);
+            return view( config('amazo.views.unauthorized'), [ 'message' => 'edit existing damage types' ]);
         }
 
         $resource = Amazo::findOrFail($id);
@@ -131,20 +132,20 @@ class AmazoController extends Controller
      *
      * @return Response
      */
-    public function update($id, Request $request)
+    public function update($id, UpdateRequest $request)
     {
         if ( config('amazo.acl.enable') && ( ! $this->checkAccess( config('amazo.acl.edit') ) ) ) {
             $level = "danger";
-            $message = "You are not permitted to edit amazo.";
+            $message = "You are not permitted to edit damage types.";
             
             return redirect()->route('amazo.index')
                     ->with( ['flash' => ['message' => $message, 'level' =>  $level] ] );
         }
 
-        $amazo =  Amazo::findOrFail($id);      
+        $amazo = Amazo::findOrFail($id);      
         $amazo->update($request->all());
         $level = "success";
-        $message = "<i class='fa fa-check-square-o fa-1x'></i> Success! Amazo edited.";
+        $message = "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage type edited.";
         
         return redirect()->route('amazo.index')
                 ->with( ['flash' => ['message' => $message, 'level' =>  $level] ] );
@@ -161,14 +162,14 @@ class AmazoController extends Controller
     {
         if ( config('amazo.acl.enable') && ( ! $this->checkAccess( config('amazo.acl.destroy') ) ) ) {
             $level = "danger";
-            $message = " You are not permitted to destroy amazo.";
+            $message = " You are not permitted to destroy damage types.";
             return redirect()->route('amazo.index')
                 ->with( ['flash' => ['message' => $message, 'level' =>  $level] ] );
         }
 
         Amazo::destroy($id);
         $level = "warning";
-        $message = "<i class='fa fa-check-square-o fa-1x'></i> Success! Amazo deleted.";
+        $message = "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage type deleted.";
 
         return redirect()->route('amazo.index')
                 ->with( ['flash' => ['message' => $message, 'level' =>  $level] ] );
