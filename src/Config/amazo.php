@@ -54,7 +54,7 @@ return [
     | Title header of the index page and other views.
     |
     */   
-   'title' => 'Amazo Damage Types',
+   'title' => 'Damage Types',
 
     /*
     |--------------------------------------------------------------------------
