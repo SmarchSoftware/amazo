@@ -2,7 +2,7 @@
 
 @section( config('amazo.section') )
 
-    <h1>Create New Amazo</h1>
+    <h1>Create New Damage Type</h1>
     <hr/>
 
     {!! Form::open( ['route' => 'amazo.store', 'class' => 'form-horizontal'] ) !!}

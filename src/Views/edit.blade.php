@@ -55,7 +55,7 @@
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
            @if ($show == '0')
-            {!! Form::submit('Edit', ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit('Edit "'.$resource->name.'"', ['class' => 'btn btn-primary form-control']) !!}
            @else
                 <i class="fa fa-pencil"></i> 
                 <a href="{{ route('amazo.edit', $resource->id) }}" title="Edit '{{ $resource->name }}'">Edit '{{ $resource->name }}'</a>

@@ -2,13 +2,13 @@
 
 @section( config('amazo.section') )
 
-    <h1><i class="fa fa-money fa-fw"></i> {{ config('amazo.title', 'Amazo') }}
+    <h1><i class="fa fa-hand-rock-o fa-fw"></i> {{ config('amazo.title', 'Damage Type') }}
     <div class="btn-group pull-right" role="group" aria-label="..."> 
       
         <a href="{{ route('amazo.create') }}">
         <button type="button" class="btn btn-info">
           <i class="fa fa-plus fa-fw"></i> 
-          <span class="hidden-xs hidden-sm">Add New Amazo</span>
+          <span class="hidden-xs hidden-sm">Add New Damage Type</span>
         </button></a>
       
     </div>
@@ -54,7 +54,7 @@
                     </td>
                 </tr>
               @empty
-                <tr><td>There are no amazo</td></tr>
+                <tr><td>There are no damage types defined yet</td></tr>
               @endforelse
             </tbody>
         </table>
