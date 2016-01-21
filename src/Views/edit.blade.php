@@ -56,11 +56,20 @@
         <div class="col-sm-offset-3 col-sm-3">
            @if ($show == '0')
             {!! Form::submit('Edit "'.$resource->name.'"', ['class' => 'btn btn-primary form-control']) !!}
+            </div>
+
+            <div class="col-sm-offset-2 col-sm-3">
+            {!! Form::open(['method'=>'delete','route'=> ['amazo.destroy',$resource->id] ]) !!}
+              <button type="submit" class="btn btn-danger">
+              <i class="fa fa-trash-o fa-lg"></i> 
+              <span class="hidden-xs hidden-sm">Delete</span>
+              </button>
+            {!! Form::close() !!}
+            </div>
            @else
                 <i class="fa fa-pencil"></i> 
                 <a href="{{ route('amazo.edit', $resource->id) }}" title="Edit '{{ $resource->name }}'">Edit '{{ $resource->name }}'</a>
            @endif
         </div>    
     </div>
-
 @endsection
