@@ -61,8 +61,7 @@
             <div class="col-sm-offset-2 col-sm-3">
             {!! Form::open(['method'=>'delete','route'=> ['amazo.destroy',$resource->id] ]) !!}
               <button type="submit" class="btn btn-danger">
-              <i class="fa fa-trash-o fa-lg"></i> 
-              <span class="hidden-xs hidden-sm">Delete</span>
+                <i class="fa fa-trash-o fa-lg"></i> Delete
               </button>
             {!! Form::close() !!}
             </div>
