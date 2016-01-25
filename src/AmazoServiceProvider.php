@@ -30,11 +30,11 @@ class AmazoServiceProvider extends ServiceProvider
 
         // config
         $this->publishes([
-            __DIR__.'/Config/Amazo.php' => config_path('amazo.php')
+            __DIR__.'/Config/amazo.php' => config_path('amazo.php')
         ], 'config');
 
         // Merge config files
-        $this->mergeConfigFrom(__DIR__.'/Config/Amazo.php','amazo');
+        $this->mergeConfigFrom(__DIR__.'/Config/amazo.php','amazo');
     }
 
     /**
