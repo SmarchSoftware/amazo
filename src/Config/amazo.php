@@ -13,7 +13,7 @@ return [
     |
     |
     */   
-   'layout' => 'watchtower::layouts.master',
+   'layout' => 'layouts.app',
 
     /*
     |--------------------------------------------------------------------------
@@ -98,6 +98,43 @@ return [
         'show'      => 'amazo.show',
         'edit'      => 'amazo.edit',
         'destroy'   => 'amazo.destroy'       
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Route Options
+    |--------------------------------------------------------------------------
+    | Prefix :
+    |-------------------------
+    |
+    | If you want to prefix all your amazo routes, enter the prefix here.
+    | https://laravel.com/docs/5.2/routing#route-group-prefixes for info.
+    | 
+    | i.e 'route_prefix' => 'admin' will change your urls to look
+    | like 'http://<yoursite>/admin/amazo/create' instead of
+    | 'http://<yoursite>/amazo/create'. Default is none.
+    |
+    |-------------------------
+    | Middleware :
+    |-------------------------
+    | An array of middlewares you wish to pass in to the group. Laravel 5.2
+    | by default requires that the "web" middleware be use for any routes
+    | that need access to session (or 'logged in' won't stay that way.)
+    |
+    | Laravel 5.1 uses "auth" for authentication so that gets passed.
+    |
+    |-------------------------
+    | As :
+    |-------------------------
+    | If you want to use something other than "amazo" in your named routes
+    | you can specify it here.
+    |
+    */
+    'route' => [
+        'prefix'    => '',
+        'as'        => 'amazo.',
+        'middleware'=> (str_contains( app()->version(), '5.2') ? ['web'] : ['auth'])
     ],
 
 ];
