@@ -57,9 +57,10 @@
            @if ($show == '0')
             {!! Form::submit('Edit "'.$resource->name.'"', ['class' => 'btn btn-primary form-control']) !!}
             </div>
+            {!! Form::close() !!}
 
             <div class="col-sm-offset-2 col-sm-3">
-            {!! Form::open(['method'=>'delete','route'=> ['amazo.destroy',$resource->id] ]) !!}
+            {!! Form::open(['id' => 'destroyForm', 'method'=>'delete','route'=> ['amazo.destroy',$resource->id] ]) !!}
               <button type="submit" class="btn btn-danger">
                 <i class="fa fa-trash-o fa-lg"></i> Delete
               </button>
