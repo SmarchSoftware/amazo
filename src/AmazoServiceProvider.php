@@ -16,8 +16,10 @@ class AmazoServiceProvider extends ServiceProvider
         // load the views
         $this->loadViewsFrom(__DIR__.'/Views', 'amazo');
 
-        // Publishes package files
-
+        /**
+         * Publish package files
+         */
+        
         // views
         $this->publishes([
             __DIR__.'/Views' => base_path('resources/views/smarch/amazo')
@@ -32,9 +34,6 @@ class AmazoServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/Config/amazo.php' => config_path('amazo.php')
         ], 'config');
-
-        // Merge config files
-        $this->mergeConfigFrom(__DIR__.'/Config/amazo.php','amazo');
     }
 
     /**
@@ -44,14 +43,12 @@ class AmazoServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        // Merge config files
+        $this->mergeConfigFrom(__DIR__.'/Config/amazo.php','amazo');
+
         // load our routes
         if (! $this->app->routesAreCached()) {
             require __DIR__.'/routes.php';
         }
-
-        // Register it
-        $this->app->bind('amazo', function() {
-             return new \Smarch\Amazo\Amazo;
-        });
     }
 }
