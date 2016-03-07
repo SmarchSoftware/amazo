@@ -26,12 +26,21 @@ class StoreRequest extends Request
     public function rules()
     {
 
-       return [
+       $rules = [
             'slug' => 'required|unique:damage_types|max:255|min:4',
             'name' => 'required|unique:damage_types|max:32|min:4',
             'enabled' => 'required|boolean',
             'notes' => 'string|max:255|min:2'
         ];
+
+ /**       if ($this->request->has('modifier')) {
+            foreach($this->request->get('character_id') as $key => $val)
+            {
+                $rules['character_id.'.$key] = 'integer|min:1';
+            }
+        }
+**/
+        return $rules;
 
     }
 }

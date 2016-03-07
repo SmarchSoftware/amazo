@@ -69,6 +69,13 @@ class AmazoController extends Controller
      */
     public function store(StoreRequest $request)
     {
+        /* $message = [];
+        for($i=0;$i<count($request->get('modifier') );$i++) {
+            $message[$request->get('modifier')[$i]] = $request->get('modifier_amount')[$i];
+        }
+        ddd($message);*/
+
+
         if ( $this->checkAccess( config('amazo.acl.create') ) ) {
             Amazo::create($request->all());            
             return redirect()->route('amazo.index')

@@ -40,7 +40,7 @@
 
                     <div class="form-group" id="modifiers">
                         <div class="col-sm-9">
-                            {!! Form::select('modifier[]', array('all-access' => 'All Access', 'no-access' => 'No Access'), null, ['placeholder' => 'No modifier.', 'class' => 'form-control'] ) !!}
+                            {!! Form::select('modifier[]', array('one'=>'One','one2'=>'One2','one3'=>'One3','one4'=>'One4'), null, ['placeholder' => 'No modifier.', 'class' => 'form-control'] ) !!}
                         </div>
 
                         <div class="col-sm-3">
