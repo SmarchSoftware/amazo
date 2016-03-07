@@ -23,6 +23,48 @@
         </div>
     </div>
     
+    <div class="form-group">
+        {!! Form::label('mods', 'Damage Modifiers: ', ['class' => 'col-sm-3 control-label']) !!}
+        <div class="col-sm-6">
+            <div class="panel panel-default" style="margin-bottom:0;">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <label>Damage Type</label>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label class="pull-right">% (+ or -)</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="modifiers">
+                        <div class="col-sm-9">
+                            {!! Form::select('modifier[]', array('all-access' => 'All Access', 'no-access' => 'No Access'), null, ['placeholder' => 'No modifier.', 'class' => 'form-control'] ) !!}
+                        </div>
+
+                        <div class="col-sm-3">
+                            <input type="number" placeholder="1" value=0 name="modifier_amount[]" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="btn-group" role="group" aria-label="...">
+                        <div class="input-group" onClick="$('.moreModifiers').prepend( $('#modifiers').clone() );">
+                            <input type="text" class="form-control" placeholder="Add Another Modifier" readonly aria-describedby="basic-addon2">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button"><i class="fa fa-plus fa-lg fa-fw"></i></button>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="moreModifiers" style="max-height:8em; overflow-x:hidden; margin-top:1em;">
+                        <small class="col-sm-12 text-muted text-center"><em>Added modifiers with empty type or % will be ignored</em></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="form-group {{ $errors->has('notes') ? 'has-error' : ''}}">
         {!! Form::label('notes', 'Notes: ', ['class' => 'col-sm-3 control-label']) !!}
         <div class="col-sm-6">
@@ -50,7 +92,6 @@
         </div>      
         {!! $errors->first('enabled', '<div class="col-sm-6 col-sm-offset-3 text-danger">:message</div>') !!}
     </div>
-
 
     <div class="form-group">
         <div class="col-sm-offset-3 col-sm-3">
