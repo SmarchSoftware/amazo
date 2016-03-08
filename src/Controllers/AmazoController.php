@@ -69,11 +69,17 @@ class AmazoController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        /* $message = [];
-        for($i=0;$i<count($request->get('modifier') );$i++) {
-            $message[$request->get('modifier')[$i]] = $request->get('modifier_amount')[$i];
+        $message = ['Begins'];
+        if ( $request->has('mod_damage') ) {
+        $md = $request->get('mod_damage');
+        ddd($request->all());
+        $ma = $request->get('mod_amount');
+        $mt = $request->get('mod_type');
+            for($i=0;$i<count($md);$i++) {
+                $message[] =  $md[$i] . " " . $mt[$i] . " " . $ma[$i];
+            }
         }
-        ddd($message);*/
+        ddd($message); /* */
 
 
         if ( $this->checkAccess( config('amazo.acl.create') ) ) {

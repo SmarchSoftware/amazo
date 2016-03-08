@@ -18,7 +18,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Name</th><th class="hidden-xs hidden-sm">Slug</th><th class="hidden-xs hidden-sm">Notes</th><th>Actions</th>
+                    <th>Name</th><th class="hidden-xs hidden-sm">Slug</th><th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,8 +29,6 @@
                     </td>
 
                     <td class="hidden-xs hidden-sm">{{ $item->slug }}</td>
-
-                    <td class="hidden-xs hidden-sm">{{ $item->notes }}</td>
                 
                     <td>
                         <a href="{{ route('amazo.show', $item->id) }}">

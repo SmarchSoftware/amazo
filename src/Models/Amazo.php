@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Amazo extends Model
 {
+    /**
+     * Constants
+     */
+    const ATTR_NAME = 'name';
+    const ATTR_SLUG = 'slug';
+    const ATTR_NOTES = 'notes';
+    const ATTR_ENABLED = 'enabled';
 
     /**
      * The database table used by the model.
@@ -14,11 +21,37 @@ class Amazo extends Model
      */
     protected $table = 'damage_types';
 
+
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug', 'notes', 'enabled'];
+    protected $fillable = [
+        self::ATTR_NAME,
+        self::ATTR_SLUG,
+        self::ATTR_NOTES,
+        self::ATTR_ENABLED
+    ];
+
+
+    /**
+     * Get Damage Type Name
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->{self::ATTR_NAME};
+    }
+
+    
+    /**
+     * Get Damage Type Slug
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->{self::ATTR_SLUG};
+    }
 
 }
