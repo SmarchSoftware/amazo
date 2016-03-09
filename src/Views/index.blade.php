@@ -43,6 +43,12 @@
                           <span class="hidden-xs hidden-sm">Edit</span>
                           </button></a>
 
+                        <a href="{{ route('amazo.mods', $item->id) }}">
+                          <button type="button" class="btn btn-warning btn-xs">
+                          <i class="fa fa-cube"></i> 
+                          <span class="hidden-xs hidden-sm">Modifiers</span>
+                          </button></a>
+
                         {!! Form::open(['method'=>'delete','route'=> ['amazo.destroy',$item->id], 'style' => 'display:inline']) !!}
                           <button type="submit" class="btn btn-danger btn-xs">
                           <i class="fa fa-trash-o fa-lg"></i> 
