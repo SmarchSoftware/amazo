@@ -43,7 +43,8 @@ return [
         'create'        => 'amazo::create',
         'show'          => 'amazo::edit',
         'edit'          => 'amazo::edit',
-        'unauthorized'  => 'amazo::unauthorized'
+        'unauthorized'  => 'amazo::unauthorized',
+        'modifiers'     => 'amazo::mods'
     ],
 
     /*

@@ -2,15 +2,16 @@
 
 @section( config('amazo.section') )
 
-    @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+  @if ($errors->has())
+  <div class="alert alert-danger">
+  <strong>Whoops!</strong> Please correct the following errors:
+  <ul>
+    @foreach ($errors->all() as $error)
+     <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+  </div>
+  @endif
 
     <h1>Create New Damage Type</h1>
     <hr/>
@@ -79,18 +80,18 @@
                             <label class="text-muted">Damage Type</label>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label class="text-muted center">Amount (+ or -)</label>
+                        <div class="col-sm-3 text-center">
+                          <label class="text-muted">Amount (+ or -)</label>
                         </div>
 
-                        <div class="col-sm-4">
-                            <label class="text-muted pull-right">Modifier Type</label>
+                        <div class="col-sm-4 text-right">
+                          <label class="text-muted">Modifier Type</label>
                         </div>
                     </div>
 
-                    <div class="form-group" id="modifiers">
                     @for ($i = 0; $i < 3; $i++)
-    <div class="col-sm-5">
+                    <div class="form-group">
+                        <div class="col-sm-5">
                             {!! Form::select("modifier[$i][damage]", $amazo, null, ['placeholder' => 'None', 'class' => 'form-control'] ) !!}
                         </div>
 
@@ -101,8 +102,8 @@
                         <div class="col-sm-4">
                             {!! Form::select("modifier[$i][type]", array('*'=>'Multiplier (*)','+'=>'Additive (+/-)'), null, ['placeholder' => 'None', 'class' => 'form-control'] ) !!}
                         </div>
-                    @endfor
                     </div>
+                    @endfor
                 </div>
                     
                 <div class="panel-footer">

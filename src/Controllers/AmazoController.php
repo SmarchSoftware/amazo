@@ -158,4 +158,22 @@ class AmazoController extends Controller
 
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     *
+     * @return Response
+     */
+    public function modifiers($id)
+    {
+        if ( $this->checkAccess( config('amazo.acl.show') ) ) {
+            $resource = Amazo::findOrFail($id);
+            $amazo = Amazo::lists('name','id');
+            return view( config('amazo.views.modifiers'), compact('resource', 'amazo') );
+        }
+        
+        return view( $this->unauthorized, ['message' => 'view damage type modifiers'] );
+    }
+
 }
