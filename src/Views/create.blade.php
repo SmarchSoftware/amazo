@@ -60,7 +60,7 @@
         </div>
         
         <div class="col-sm-3 text-right">
-            <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseModifiers" aria-expanded="false" aria-controls="collapseModifiers"> <i class="fa fa-binoculars"></i> Toggle Modifiers</button>
+            <button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#collapseModifiers" aria-expanded="false" aria-controls="collapseModifiers"> <i class="fa fa-plus"></i> Add Damage Modifiers</a>
         </div>
         {!! $errors->first('enabled', '<div class="col-sm-6 col-sm-offset-3 text-danger">:message</div>') !!}
     </div>
@@ -69,24 +69,28 @@
         <label class="col-sm-3 control-label">Damage Modifiers:<br /><em class="text-muted">(Optional)</em></label>        
         <div class="col-sm-6">
             <div class="panel panel-default" style="margin-bottom:0;">
+                <div class="panel-heading">
+                   <h2 class="panel-title">You can add up to 3 modifiers now. You can always add more later.</h2>
+                </div>
+
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <label>Damage Type</label>
+                        <div class="col-sm-5">
+                            <label class="text-muted">Damage Type</label>
                         </div>
 
                         <div class="col-sm-3">
-                            <label>Amount (+ or -)</label>
+                            <label class="text-muted center">Amount (+ or -)</label>
                         </div>
 
-                        <div class="col-sm-3">
-                            <label>Mod Type</label>
+                        <div class="col-sm-4">
+                            <label class="text-muted pull-right">Modifier Type</label>
                         </div>
                     </div>
 
                     <div class="form-group" id="modifiers">
-                    @for ($i = 0; $i < 5; $i++)
-    <div class="col-sm-6">
+                    @for ($i = 0; $i < 3; $i++)
+    <div class="col-sm-5">
                             {!! Form::select("modifier[$i][damage]", $amazo, null, ['placeholder' => 'None', 'class' => 'form-control'] ) !!}
                         </div>
 
@@ -94,13 +98,15 @@
                             {!! Form::number("modifier[$i][amount]", null, ['placeholder' => 'None', 'class' => 'form-control', 'step'=>'any'] ) !!}
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             {!! Form::select("modifier[$i][type]", array('*'=>'Multiplier (*)','+'=>'Additive (+/-)'), null, ['placeholder' => 'None', 'class' => 'form-control'] ) !!}
                         </div>
                     @endfor
-
-                        <small class="col-sm-12 text-muted text-center"><em>Added modifiers with an empty type or amount will be ignored</em></small>
                     </div>
+                </div>
+                    
+                <div class="panel-footer">
+                    <div class="text-muted text-center"><em>Added modifiers *must* have a value in all 3 fields.</em></div>
                 </div>
             </div>
         </div>
