@@ -56,7 +56,8 @@ class AmazoController extends Controller
     public function create()
     {
         if ( $this->checkAccess( config('amazo.acl.create') ) ) {
-            return view( config('amazo.views.create') );
+            $amazo = Amazo::lists('name','id');
+            return view( config('amazo.views.create'), compact('amazo') );
         }
         
         return view( $this->unauthorized, ['message' => 'create new damage type'] );        
@@ -69,8 +70,8 @@ class AmazoController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $data = $this->cleanModifiersArray($request);
-
+        ddd($request->all());
+        
         if ( $this->checkAccess( config('amazo.acl.create') ) ) {
             Amazo::create($request->all());            
             return redirect()->route('amazo.index')
@@ -79,19 +80,6 @@ class AmazoController extends Controller
         
         return redirect()->route('amazo.index')
             ->with( ['flash' => ['message' => "You are not permitted to create damage types", 'level' => "danger"] ] );
-    }
-
-    public function cleanModifiersArray(Request $request)
-    {
-        $md = $request->get('mod_damage');
-        $ma = $request->get('mod_amount');
-        $mt = $request->get('mod_type');
-        for($i=0;$i<count($mt);$i++) {
-            if ( empty($mt[$i]) ) {
-                $message = $md[$i] . ' had no type with amount' . $ma[$i];
-            }
-        }
-        ddd($message); /* */
     }
 
     /**
