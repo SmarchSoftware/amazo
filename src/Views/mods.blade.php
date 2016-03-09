@@ -2,6 +2,17 @@
 
 @section( config('amazo.section') )
 
+  @if ($errors->has())
+  <div class="alert alert-danger">
+  <strong>Whoops!</strong> Please correct the following errors:
+  <ul>
+    @foreach ($errors->all() as $error)
+     <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+  </div>
+  @endif
+
   <h3>'{{ $resource->name }}' Modifiers</h3>
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">

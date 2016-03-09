@@ -16,5 +16,6 @@ Route::group( [
 			]
 		);
 		Route::get('amazo/{id}/mods', 'Smarch\Amazo\Controllers\AmazoController@modifiers')->name('mods');
+		Route::post('amazo/{id}/mods', 'Smarch\Amazo\Controllers\AmazoController@updateModifiers')->name('mods');
 	}
 );

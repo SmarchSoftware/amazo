@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Smarch\Amazo\Models\Amazo;
 use Smarch\Amazo\Requests\StoreRequest;
 use Smarch\Amazo\Requests\UpdateRequest;
+use Smarch\Amazo\Requests\UpdateModsRequest;
+
 use Smarch\Amazo\Traits\SmarchACLTrait;
 
 class AmazoController extends Controller
@@ -174,6 +176,26 @@ class AmazoController extends Controller
         }
         
         return view( $this->unauthorized, ['message' => 'view damage type modifiers'] );
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     *
+     * @return Response
+     */
+    public function updateModifiers($id, UpdateModsRequest $request)
+    {
+        if ( $this->checkAccess( config('amazo.acl.edit') ) ) {
+            $amazo = Amazo::findOrFail($id);      
+            $amazo->update($request->all());        
+            return redirect()->route('amazo.index')
+                ->with( ['flash' => ['message' => "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage type edited.", 'level' => "success"] ] );
+        }
+
+        return redirect()->route('amazo.index')
+            ->with( ['flash' => ['message' => "You are not permitted to edit damage types.", 'level' => "danger"] ] );
     }
 
 }
