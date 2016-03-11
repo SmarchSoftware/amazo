@@ -98,7 +98,8 @@ return [
         'create'    => 'amazo.create',
         'show'      => 'amazo.show',
         'edit'      => 'amazo.edit',
-        'destroy'   => 'amazo.destroy'       
+        'destroy'   => 'amazo.destroy',
+        'destroy_mod' => 'amazo.destroy.mod'
     ],
 
 

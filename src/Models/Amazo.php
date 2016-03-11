@@ -4,6 +4,8 @@ namespace Smarch\Amazo\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Smarch\Amazo\Models\AmazoMods;
+
 class Amazo extends Model
 {
     /**
@@ -33,6 +35,17 @@ class Amazo extends Model
         self::ATTR_NOTES,
         self::ATTR_ENABLED
     ];
+
+
+    /**
+     * Get the mods for the damage type
+     * 
+     * @return object
+     */
+    public function modifiers()
+    {
+        return $this->hasMany('Smarch\Amazo\Models\AmazoMods', 'parent_id');
+    }
 
 
     /**

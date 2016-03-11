@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use Smarch\Amazo\Models\Amazo;
+use Smarch\Amazo\Models\AmazoMods;
 use Smarch\Amazo\Requests\StoreRequest;
 use Smarch\Amazo\Requests\UpdateRequest;
 use Smarch\Amazo\Requests\UpdateModsRequest;
@@ -157,6 +158,26 @@ class AmazoController extends Controller
 
         return redirect()->route('amazo.index')
             ->with( ['flash' => ['message' => "You are not permitted to destroy damage types.", 'level' => "danger"] ] );
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     *
+     * @return Response
+     */
+    public function destroyModifier($id)
+    {
+        if ( $this->checkAccess( config('amazo.acl.destroy_mod') ) ) {
+            AmazoMods::destroy($id);
+            return redirect()->route('amazo.index')
+                ->with( ['flash' => ['message' => "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage Modifier deleted.", 'level' => "warning"] ] );
+        }
+
+        return redirect()->route('amazo.index')
+            ->with( ['flash' => ['message' => "You are not permitted to destroy damage modifiers.", 'level' => "danger"] ] );
 
     }
 
