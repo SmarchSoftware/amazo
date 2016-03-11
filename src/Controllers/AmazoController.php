@@ -72,9 +72,7 @@ class AmazoController extends Controller
      * @return Response
      */
     public function store(StoreRequest $request)
-    {
-        ddd($request->all());
-        
+    {        
         if ( $this->checkAccess( config('amazo.acl.create') ) ) {
             Amazo::create($request->all());            
             return redirect()->route('amazo.index')
@@ -207,16 +205,15 @@ class AmazoController extends Controller
      * @return Response
      */
     public function updateModifiers($id, UpdateModsRequest $request)
-    {
-        if ( $this->checkAccess( config('amazo.acl.edit') ) ) {
-            $amazo = Amazo::findOrFail($id);      
-            $amazo->update($request->all());        
+    {       
+        if ( $this->checkAccess( config('amazo.acl.add_mod') ) ) {
+            AmazoMods::create( $request->all(), ['parent_id' => $id] );
             return redirect()->route('amazo.index')
-                ->with( ['flash' => ['message' => "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage type edited.", 'level' => "success"] ] );
+                    ->with( ['flash' => ['message' => "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage modifiers added.", 'level' => "success"] ] );
         }
-
+        
         return redirect()->route('amazo.index')
-            ->with( ['flash' => ['message' => "You are not permitted to edit damage types.", 'level' => "danger"] ] );
+            ->with( ['flash' => ['message' => "You are not permitted to create damage types", 'level' => "danger"] ] );
     }
 
 }

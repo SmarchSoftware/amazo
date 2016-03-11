@@ -99,7 +99,8 @@ return [
         'show'      => 'amazo.show',
         'edit'      => 'amazo.edit',
         'destroy'   => 'amazo.destroy',
-        'destroy_mod' => 'amazo.destroy.mod'
+        'destroy_mod' => 'amazo.destroy.mod',
+        'add_mod'   => 'amazo.add.mod'
     ],
 
 

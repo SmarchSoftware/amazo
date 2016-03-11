@@ -5,7 +5,7 @@
     <h1>{{ ( ($show == '0') ? 'Edit' : 'Viewing' ) }}  {{ $resource->name }}</h1>
     <hr/>
 
-    {!! Form::model($resource, ['method' => 'PATCH', 'route' => [ 'amazo.update', $resource->id ], 'class' => 'form-horizontal']) !!}
+    {!! Form::model($resource, ['method' => 'PATCH', 'route' => [  config('amazo.route.as') . 'update', $resource->id ], 'class' => 'form-horizontal']) !!}
     {!! Form::hidden('id', $resource->id) !!}    
 
     <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
@@ -60,7 +60,7 @@
             {!! Form::close() !!}
 
             <div class="col-sm-offset-2 col-sm-3">
-            {!! Form::open(['id' => 'destroyForm', 'method'=>'delete','route'=> ['amazo.destroy',$resource->id] ]) !!}
+            {!! Form::open(['id' => 'destroyForm', 'method'=>'delete','route'=> [ config('amazo.route.as') . 'destroy',$resource->id] ]) !!}
               <button type="submit" class="btn btn-danger">
                 <i class="fa fa-trash-o fa-lg"></i> Delete
               </button>
@@ -68,7 +68,7 @@
             </div>
            @else
                 <i class="fa fa-pencil"></i> 
-                <a href="{{ route('amazo.edit', $resource->id) }}" title="Edit '{{ $resource->name }}'">Edit '{{ $resource->name }}'</a>
+                <a href="{{ route( config('amazo.route.as') . 'edit', $resource->id) }}" title="Edit '{{ $resource->name }}'">Edit '{{ $resource->name }}'</a>
            @endif
         </div>    
     </div>

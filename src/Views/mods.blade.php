@@ -36,7 +36,7 @@
             </div>
           </div>
 
-          {!! Form::open( ['route' => 'amazo.mods', 'class' => 'form-horizontal'] ) !!}
+          {!! Form::model($resource, ['_method' => 'PATCH', 'route' => [ config('amazo.route.as') . 'mods', $resource->id ], 'class' => 'form-horizontal']) !!}
           @for ($i = 0; $i < 3; $i++)
           <div class="form-group">
             <div class="col-sm-5">
@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="col-sm-1">
-                  {!! Form::open(['method'=>'delete','route'=> ['amazo.destroy.mod',$item->id], 'style' => 'display:inline']) !!}
+                  {!! Form::open(['method'=>'delete','route'=> [ config('amazo.route.as') . 'destroy.mod',$item->id], 'style' => 'display:inline']) !!}
                     <button type="submit" class="btn btn-danger btn-xs">
                     <i class="fa fa-trash-o fa-lg"></i> 
                     <span class="hidden-xs hidden-sm">Delete</span>

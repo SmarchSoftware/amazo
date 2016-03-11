@@ -16,7 +16,7 @@
     <h1>Create New Damage Type</h1>
     <hr/>
 
-    {!! Form::open( ['route' => 'amazo.store', 'class' => 'form-horizontal'] ) !!}
+    {!! Form::open( ['route' =>  config('amazo.route.as') . 'store', 'class' => 'form-horizontal'] ) !!}
 
     <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
         {!! Form::label('name', 'Name: ', ['class' => 'col-sm-3 control-label']) !!}

@@ -5,7 +5,7 @@
     <h1><i class="fa fa-hand-rock-o fa-fw"></i> {{ config('amazo.title', 'Damage Type') }}
     <div class="btn-group pull-right" role="group" aria-label="..."> 
       
-        <a href="{{ route('amazo.create') }}">
+        <a href="{{ route( config('amazo.route.as') . 'create') }}">
         <button type="button" class="btn btn-info">
           <i class="fa fa-plus fa-fw"></i> 
           <span class="hidden-xs hidden-sm">Add New Damage Type</span>
@@ -31,25 +31,25 @@
                     <td class="hidden-xs hidden-sm">{{ $item->slug }}</td>
                 
                     <td>
-                        <a href="{{ route('amazo.show', $item->id) }}">
+                        <a href="{{ route( config('amazo.route.as') . 'show', $item->id) }}">
                           <button type="button" class="btn btn-primary btn-xs">
                           <i class="fa fa-search fa-fw"></i> 
                           <span class="hidden-xs hidden-sm">View</span>
                           </button></a>
 
-                        <a href="{{ route('amazo.edit', $item->id) }}">
+                        <a href="{{ route( config('amazo.route.as') . 'edit', $item->id) }}">
                           <button type="button" class="btn btn-default btn-xs">
                           <i class="fa fa-pencil fa-fw"></i> 
                           <span class="hidden-xs hidden-sm">Edit</span>
                           </button></a>
 
-                        <a href="{{ route('amazo.mods', $item->id) }}">
+                        <a href="{{ route( config('amazo.route.as') . 'mods', $item->id) }}">
                           <button type="button" class="btn btn-warning btn-xs">
                           <i class="fa fa-cube"></i> 
                           <span class="hidden-xs hidden-sm">Modifiers</span>
                           </button></a>
 
-                        {!! Form::open(['method'=>'delete','route'=> ['amazo.destroy',$item->id], 'style' => 'display:inline']) !!}
+                        {!! Form::open(['method'=>'delete','route'=> [ config('amazo.route.as') . 'destroy',$item->id], 'style' => 'display:inline']) !!}
                           <button type="submit" class="btn btn-danger btn-xs">
                           <i class="fa fa-trash-o fa-lg"></i> 
                           <span class="hidden-xs hidden-sm">Delete</span>

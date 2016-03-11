@@ -18,6 +18,11 @@ class UpdateModsRequest extends Request
         return true;
     }
 
+    /**
+     * Custom validation messages
+     * 
+     * @return array
+     */
     public function messages()
     {
         foreach($this->request->get('modifier') as $key => $val) {
