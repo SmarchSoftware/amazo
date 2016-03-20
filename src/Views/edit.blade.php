@@ -34,21 +34,27 @@
     
     <div class="form-group {{ $errors->has('enabled') ? 'has-error' : ''}}">
         {!! Form::label('enabled', 'Enabled: ', ['class' => 'col-sm-3 control-label']) !!}
-        <div class="col-sm-6">
+        <div class="col-sm-3">
             <div class="btn-group" data-toggle="buttons">
-              <label class="btn btn-sm btn-primary{{ $resource->enabled == 1 ? ' active' : '' }}">
+              <label class="btn btn btn-primary{{ $resource->enabled == 1 ? ' active' : '' }}">
                 {!! Form::radio('enabled',1, null, ['class' => 'form-control'] ) !!} Yes
               </label>
 
-              <label class="btn btn-sm btn-primary{{ $resource->enabled == 0 ? ' active' : '' }}">
+              <label class="btn btn btn-primary{{ $resource->enabled == 0 ? ' active' : '' }}">
                 {!! Form::radio('enabled',0, null, ['class' => 'form-control'] ) !!} No
               </label>
 
-              <label data-toggle="tooltip" data-placement="right" class="btn btn-sm btn-default" title="Currently in use?">
+              <label data-toggle="tooltip" data-placement="right" class="btn btn btn-default" title="Currently in use?">
                 <i class="fa fa-lg fa-question-circle"></i>
               </label>
             </div>
-        </div>      
+        </div>
+
+        <div class="col-sm-3 text-right">
+            <a href="{{ route( config('amazo.route.as') . 'mods', $resource->id) }}">
+             <button type="button" class="btn btn-warning btn"><i class="fa fa-cube"></i> <span class="hidden-xs hidden-sm">Edit damage modifiers</span></button>
+            </a>
+        </div>
         {!! $errors->first('enabled', '<div class="col-sm-6 col-sm-offset-3 text-danger">:message</div>') !!}
     </div>
 
@@ -59,7 +65,7 @@
             </div>
             {!! Form::close() !!}
 
-            <div class="col-sm-offset-2 col-sm-3">
+            <div class="col-sm-3 text-right">
             {!! Form::open(['id' => 'destroyForm', 'method'=>'delete','route'=> [ config('amazo.route.as') . 'destroy',$resource->id] ]) !!}
               <button type="submit" class="btn btn-danger">
                 <i class="fa fa-trash-o fa-lg"></i> Delete
