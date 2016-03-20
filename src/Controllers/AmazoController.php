@@ -71,10 +71,17 @@ class AmazoController extends Controller
      *
      * @return Response
      */
-    public function store(StoreRequest $request)
-    {        
+    public function store(Request $request)
+    {
+        // Modify the request
+        $request['attending'] = true;
+
+        // Execute validation manually
+        app('Smarch\Amazo\Requests\StoreRequest');
+
         if ( $this->checkAccess( config('amazo.acl.create') ) ) {
-            Amazo::create($request->all());            
+            $data = Amazo::create($request->all());
+            $this->updateModifiers($data->id, $request);        
             return redirect()->route('amazo.index')
                     ->with( ['flash' => ['message' => "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage type created.", 'level' => "success"] ] );
         }
@@ -204,10 +211,33 @@ class AmazoController extends Controller
      *
      * @return Response
      */
-    public function updateModifiers($id, UpdateModsRequest $request)
-    {       
+    public function updateModifiers($id, Request $request)
+    {
+        // Modify the request
+        $request['attending'] = true;
+
+        // Execute validation manually
+        app('Smarch\Amazo\Requests\UpdateModsRequest');
+
         if ( $this->checkAccess( config('amazo.acl.add_mod') ) ) {
-            AmazoMods::create( $request->all(), ['parent_id' => $id] );
+            $filtered = array_filter( array_map('array_filter', $request->modifier) );
+
+            if ( empty( $filtered ) ) {
+                return redirect()
+                    ->back()
+                    ->withErrors("No damage modifiers selected.");
+            }
+            
+            foreach($filtered as $mod) {
+                $data = [ 
+                    'damage_type_id' => $mod['damage'],
+                    'mod_type' => $mod['type'],
+                    'amount' => $mod['amount'],
+                    'parent_id' => $id
+                ];
+                AmazoMods::create($data);
+            }
+
             return redirect()->route('amazo.index')
                     ->with( ['flash' => ['message' => "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage modifiers added.", 'level' => "success"] ] );
         }
