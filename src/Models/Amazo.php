@@ -47,6 +47,40 @@ class Amazo extends Model
         return $this->hasMany('Smarch\Amazo\Models\AmazoMods', 'parent_id');
     }
 
+    public function getDamage($damage = 0)
+    {
+        $mods = $this->modifiers;
+
+        $object = new \stdClass();
+        $object->startingDamage = $damage;
+        $object->addedModifierDamage = 0;
+
+        foreach($mods as $item) {
+            $bcOperator = ($item->mod_type === "+") ? 'bcadd' : 'bcmul';
+            $modDamage = call_user_func($bcOperator, $object->startingDamage, $item->amount);
+
+            $props[] = (object) [ 
+                'message' => $item->damageType->name . " generated " . $modDamage . " damage (".$damage . " ".$item->mod_type." ".$item->amount.")",
+                'parentName' => $this->getName(),
+                'modifierName' => $item->damageType->name,
+                'modifierAmount' => $item->amount,
+                'modifierDamage' => $modDamage,
+                'operator' => (object) [ 
+                    'stringOperator' => $item->mod_type,
+                    'bcOperator' => $bcOperator
+                ]
+            ];
+
+            $object->addedModifierDamage += $modDamage;
+        }
+
+        $object->totalDamage = ($object->startingDamage + $object->addedModifierDamage);
+        
+        $object->modifiers = (object) $props;
+
+        return $object;
+    }
+
 
     /**
      * Get Damage Type Name

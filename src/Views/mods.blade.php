@@ -13,7 +13,44 @@
   </div>
   @endif
 
-  <h3>'{{ $resource->name }}' Modifiers</h3>
+  <h3>'{{ $resource->name }}' Modifiers</h3><div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12 collapse in" id="modifierInfo">
+    <div class="panel panel-primary">
+      <div class="panel-body">
+      <button type="button" class="close" data-toggle="collapse" data-target="#modifierInfo" aria-label="Close" title="Close" aria-controls="modifierInfo" aria-expanded="true">&times;</button>
+        <p><strong>Damage modifiers are completely optional.</strong> Say, for example, you already have a damage type called "Cold". Now say you wish to have an "Ice" damage type that deals "double" the  damage "Cold" performs whenever it hits. So you would create your "Ice" damage type and then give it a damage modifier to the "Cold" damage type with a "mulitplier" of "2.000". Now whenever your "Ice" damage type is applied it will double whatever the "Cold" damage was as well.
+        <pre class="collapse" id="collapseExample">
+        $damage = "100"; //determined earlier in code.
+
+        // i.e. $resource = "Cold" damage type object
+        $totalDamage = $resource->getDamage($damage)->totalDamage;
+        //returns 300
+
+        // getModifierDamage is actually an object with all the modifier and damage information
+        dd( $resource->getDamage($damage) );
+        // returns
+        public startingDamage -> integer 100
+        public addedModifierDamage -> integer 200
+        public totalDamage -> integer 300
+          →public modifiers -> stdClass(1)
+            →public 0 -> stdClass(6)
+            public message -> string(48) "fdsadf generated 200 damage (100 * 2.0000)"
+            public parentName -> string(8) "Cold"
+            public modifierName -> string(6) "Ice"
+            public modifierAmount -> string(9) "2.0000"
+            public modifierDamage -> string(6) "200"
+            →public operator -> stdClass(2)
+              public stringOperator -> string(1) "*"
+              public bcOperator -> string(5) "bcmul"
+        </pre>
+        </p>
+
+        <p><button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Toggle Example </button></p>
+      </div>
+    </div>
+   </div>
+  </div>
+
   <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="panel panel-primary">
