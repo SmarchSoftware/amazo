@@ -26,7 +26,7 @@
         $totalDamage = $resource->getDamage($damage)->totalDamage;
         //returns 300
 
-        // getDamage is actually an object with all the modifier and damage information
+        // getDamage() returns an object with all the modifier and damage information
         dd( $resource->getDamage($damage) );
         // returns
         public startingDamage -> integer 100
