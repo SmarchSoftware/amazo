@@ -13,8 +13,9 @@
   </div>
   @endif
 
-  <h3>'{{ $resource->name }}' Modifiers</h3><div class="row">
-  <div class="col-md-12 col-sm-12 col-xs-12 collapse in" id="modifierInfo">
+  <h3>'{{ $resource->name }}' Modifiers <button type="button" class="btn btn-xs btn-default" data-toggle="collapse" data-target="#modifierInfo" aria-expanded="false" aria-controls="modifierInfo"><i class="fa fa-question fa-fw fa-2x"></i> </button></h3>
+  <div class="row">
+   <div class="col-md-12 col-sm-12 col-xs-12 collapse" id="modifierInfo">
     <div class="panel panel-primary">
       <div class="panel-body">
       <button type="button" class="close" data-toggle="collapse" data-target="#modifierInfo" aria-label="Close" title="Close" aria-controls="modifierInfo" aria-expanded="true">&times;</button>
