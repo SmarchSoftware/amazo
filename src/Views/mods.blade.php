@@ -122,7 +122,7 @@
               </div>
 
               <div class="col-sm-3">
-                <label class="text-muted">Amount (+ or -)</label>
+                <label class="text-muted">Amount</label>
               </div>
 
               <div class="col-sm-3 text-right">
@@ -134,7 +134,6 @@
               </div>
             </div>
             @forelse($resource->modifiers as $item)
-
               <div class="row">
                 <div class="col-sm-5">
                   <label>{{ $item->damageType->name }}</label>
@@ -163,6 +162,26 @@
                 <i class="fa fa-warning fa-2x"></i> <span class="lead">There are no modifiers for {{ $resource->name }}.</span>
               </div>
             @endforelse
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <div class="row">
+            <div class="col-sm-12 text-primary text-center">
+            @if (count($resource->modifiers) > 0)
+              <em>With a starting damage of 100, these modifiers would add {!! $resource->getDamage('100')->addedModifierDamage !!} damage for a total of {!! $resource->getDamage('100')->totalDamage !!} </em> <button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#collapseExplain" aria-expanded="false" aria-controls="collapseExplain"> Explain </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-4 col-xs-offset-4 text-default collapse" id="collapseExplain">
+              @foreach ($resource->getDamage('100')->modifiers as $mod)
+               <li>{!! $mod->message !!}</li>
+              @endforeach
+            @else
+              <em>There are no modifiers for {{ $resource->name }}.</em>
+            @endif
+            </div>
           </div>
         </div>
       </div>

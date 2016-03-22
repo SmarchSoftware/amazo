@@ -51,13 +51,17 @@ class Amazo extends Model
     {
         $mods = $this->modifiers;
 
+        if (count($mods) <= 0) {
+            return;
+        }
+
         $object = new \stdClass();
         $object->startingDamage = $damage;
         $object->addedModifierDamage = 0;
 
         foreach($mods as $item) {
             $bcOperator = ($item->mod_type === "+") ? 'bcadd' : 'bcmul';
-            $modDamage = call_user_func($bcOperator, $object->startingDamage, $item->amount);
+            $modDamage = ( call_user_func($bcOperator, $object->startingDamage, $item->amount) - $object->startingDamage);
 
             $props[] = (object) [ 
                 'message' => $item->damageType->name . " generated " . $modDamage . " damage (".$damage . " ".$item->mod_type." ".$item->amount.")",
