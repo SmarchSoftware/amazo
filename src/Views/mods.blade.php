@@ -26,11 +26,11 @@
         $totalDamage = $resource->getDamage($damage)->totalDamage;
         //returns 300
 
-        // getModifierDamage is actually an object with all the modifier and damage information
+        // getDamage is actually an object with all the modifier and damage information
         dd( $resource->getDamage($damage) );
         // returns
         public startingDamage -> integer 100
-        public addedModifierDamage -> integer 200
+        public allModifierDamage -> integer 200
         public totalDamage -> integer 300
           →public modifiers -> stdClass(1)
             →public 0 -> stdClass(6)
@@ -169,12 +169,12 @@
           <div class="row">
             <div class="col-sm-12 text-primary text-center">
             @if (count($resource->modifiers) > 0)
-              <em>With a starting damage of 100, these modifiers would add {!! $resource->getDamage('100')->addedModifierDamage !!} damage for a total of {!! $resource->getDamage('100')->totalDamage !!} </em> <button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#collapseExplain" aria-expanded="false" aria-controls="collapseExplain"> Explain </button>
+              <em>With a starting damage of 100, these modifiers would add {!! $resource->getDamage('100')->allModifierDamage !!} damage for a total of {!! $resource->getDamage('100')->totalDamage !!} </em> <button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#collapseExplain" aria-expanded="false" aria-controls="collapseExplain"> Explain </button>
             </div>
           </div>
 
           <div class="row">
-            <div class="col-xs-4 col-xs-offset-4 text-default collapse" id="collapseExplain">
+            <div class="col-xs-11 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-9 col-md-offset-3 text-default collapse" id="collapseExplain">
               @foreach ($resource->getDamage('100')->modifiers as $mod)
                <li>{!! $mod->message !!}</li>
               @endforeach

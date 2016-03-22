@@ -57,14 +57,19 @@ class Amazo extends Model
 
         $object = new \stdClass();
         $object->startingDamage = $damage;
-        $object->addedModifierDamage = 0;
+        $object->allModifierDamage = 0;
 
         foreach($mods as $item) {
             $bcOperator = ($item->mod_type === "+") ? 'bcadd' : 'bcmul';
-            $modDamage = ( call_user_func($bcOperator, $object->startingDamage, $item->amount) - $object->startingDamage);
+            $modDamage = call_user_func($bcOperator, $object->startingDamage, $item->amount);
+            $mathText = $object->startingDamage. " ".$item->mod_type." ".$item->amount;
+            if ($bcOperator == 'bcadd') {
+                $modDamage = $item->amount;
+                $mathText = "+ ".$modDamage;
+            }
 
             $props[] = (object) [ 
-                'message' => $item->damageType->name . " generated " . $modDamage . " damage (".$damage . " ".$item->mod_type." ".$item->amount.")",
+                'message' => $item->damageType->name . " generated " . $modDamage . " damage (".$mathText.")",
                 'parentName' => $this->getName(),
                 'modifierName' => $item->damageType->name,
                 'modifierAmount' => $item->amount,
@@ -75,11 +80,9 @@ class Amazo extends Model
                 ]
             ];
 
-            $object->addedModifierDamage += $modDamage;
+            $object->allModifierDamage += $modDamage;
         }
-
-        $object->totalDamage = ($object->startingDamage + $object->addedModifierDamage);
-        
+        $object->totalDamage = ($object->startingDamage + $object->allModifierDamage);
         $object->modifiers = (object) $props;
 
         return $object;
