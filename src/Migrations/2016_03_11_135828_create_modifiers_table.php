@@ -17,6 +17,7 @@ class CreateModifiersTable extends Migration
             $table->integer('parent_id')->unsigned()->default('1')->required();
             $table->integer('damage_type_id')->unsigned()->default('1')->required();
             $table->decimal('amount',14,4)->default('1')->required();
+            $table->boolean('cumulative')->default('0')->required();
             $table->enum('mod_type', ['*', '+'])->default('*');
 
             $table->foreign('parent_id')->references('id')->on('damage_types')->onDelete('cascade');
