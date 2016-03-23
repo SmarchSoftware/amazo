@@ -49,7 +49,7 @@ class Amazo extends Model
 
     public function addModifierDamage($damage = 0)
     {
-        $mods = $this->modifiers;
+        $mods = $this->modifiers->sortBy('cumulative');
 
         if (count($mods) <= 0) {
             return;
@@ -60,34 +60,33 @@ class Amazo extends Model
         $object->allModifierDamage = 0;
 
         foreach($mods as $item) {
-            $bcOperator = ($item->mod_type === "+") ? 'bcadd' : 'bcmul';
-            $modDamage = call_user_func($bcOperator, $object->startingDamage, $item->amount);
-            $mathText = $object->startingDamage. " ".$item->mod_type." ".$item->amount;
-            if ($bcOperator == 'bcadd') {
-                $modDamage = $item->amount;
-                $mathText = "+ ".$modDamage;
-            }
+            $damageToModify = ($item->cumulative) ? ($object->startingDamage + $object->allModifierDamage) : $object->startingDamage;
+            $modifierDamage = $this->doModMath($damageToModify, $item->amount, $item->mod_type);
+            $mathText = $damageToModify. " ".$item->mod_type." ".$item->amount;
 
             $props[] = (object) [ 
-                'message' => $item->damageType->name . " generated " . $modDamage . " damage (".$mathText.")",
+                'message' => $item->damageType->name . " generated " . $modifierDamage . " damage (".$mathText.")",
                 'parentName' => $this->getName(),
                 'modifierName' => $item->damageType->name,
                 'modifierAmount' => $item->amount,
-                'modifierDamage' => $modDamage,
+                'modifierDamage' => $modifierDamage,
                 'modifierCumulative' => $item->cumulative,
                 'modifierCumulativeAsString' => $item->CumulativeString,
-                'operator' => (object) [ 
-                    'stringOperator' => $item->mod_type,
-                    'bcOperator' => $bcOperator
-                ]
+                'operator' =>  $item->mod_type
             ];
 
-            $object->allModifierDamage += $modDamage;
+            $object->allModifierDamage += $modifierDamage;
         }
+
         $object->totalDamage = ($object->startingDamage + $object->allModifierDamage);
         $object->modifiers = (object) $props;
 
         return $object;
+    }
+
+    protected function doModMath($damage=1, $amount=1, $operator="+")
+    {
+        return ($operator == "+") ? ($damage + $amount) : ($damage * $amount) ;
     }
 
 
