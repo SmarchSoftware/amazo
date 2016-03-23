@@ -62,7 +62,7 @@ class Amazo extends Model
         foreach($mods as $item) {
             $damageToModify = ($item->cumulative) ? ($object->startingDamage + $object->allModifierDamage) : $object->startingDamage;
             $modifierDamage = $this->doModMath($damageToModify, $item->amount, $item->mod_type);
-            $mathText = $damageToModify. " ".$item->mod_type." ".$item->amount;
+            $mathText = ($item->mod_type == "+") ? $item->mod_type." ".$item->amount : $damageToModify. " ".$item->mod_type." ".$item->amount;
 
             $props[] = (object) [ 
                 'message' => $item->damageType->name . " generated " . $modifierDamage . " damage (".$mathText.")",
@@ -86,7 +86,7 @@ class Amazo extends Model
 
     protected function doModMath($damage=1, $amount=1, $operator="+")
     {
-        return ($operator == "+") ? ($damage + $amount) : ($damage * $amount) ;
+        return ($operator == "+") ? $amount : ($damage * $amount) ;
     }
 
 
