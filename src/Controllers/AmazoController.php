@@ -198,7 +198,8 @@ class AmazoController extends Controller
         if ( $this->checkAccess( config('amazo.acl.show') ) ) {
             $resource = Amazo::findOrFail($id);
             $amazo = Amazo::lists('name','id');
-            return view( config('amazo.views.modifiers'), compact('resource', 'amazo') );
+            $modDamage = $resource->addModifierDamage('100');
+            return view( config('amazo.views.modifiers'), compact('resource', 'amazo', 'modDamage') );
         }
         
         return view( $this->unauthorized, ['message' => 'view damage type modifiers'] );

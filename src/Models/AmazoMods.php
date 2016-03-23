@@ -15,6 +15,7 @@ class AmazoMods extends Model
     const ATTR_MOD_TYPE = 'mod_type';
     const ATTR_DAMAGE_TYPE_ID = 'damage_type_id';
     const ATTR_PARENT_ID = 'parent_id';
+    const ATTR_CUMULATIVE = 'cumulative';
 
     /**
      * The database table used by the model.
@@ -32,8 +33,22 @@ class AmazoMods extends Model
         self::ATTR_AMOUNT,
         self::ATTR_MOD_TYPE,
         self::ATTR_DAMAGE_TYPE_ID,
-        self::ATTR_PARENT_ID
+        self::ATTR_PARENT_ID,
+        self::ATTR_CUMULATIVE
     ];
+
+    /**
+     * Type cast booleans from db
+     * @var [type]
+     */
+    protected $casts = [
+        self::ATTR_CUMULATIVE => 'boolean',
+    ];
+
+
+    protected $attributes = array(
+        'CumulativeString' => '',
+    );
 
     /**
      * Get the mods for the damage type
@@ -43,5 +58,17 @@ class AmazoMods extends Model
     public function damageType()
     {
         return $this->belongsTo('Smarch\Amazo\Models\Amazo','damage_type_id');
+    }
+
+
+    /**
+     * Set the cumulative text.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getCumulativeStringAttribute($value)
+    {
+        return ( $this->{self::ATTR_CUMULATIVE} ) ? 'Total' : 'Base';
     }
 }

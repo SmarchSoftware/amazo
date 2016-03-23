@@ -47,7 +47,7 @@ class Amazo extends Model
         return $this->hasMany('Smarch\Amazo\Models\AmazoMods', 'parent_id');
     }
 
-    public function getDamage($damage = 0)
+    public function addModifierDamage($damage = 0)
     {
         $mods = $this->modifiers;
 
@@ -74,6 +74,8 @@ class Amazo extends Model
                 'modifierName' => $item->damageType->name,
                 'modifierAmount' => $item->amount,
                 'modifierDamage' => $modDamage,
+                'modifierCumulative' => $item->cumulative,
+                'modifierCumulativeAsString' => $item->CumulativeString,
                 'operator' => (object) [ 
                     'stringOperator' => $item->mod_type,
                     'bcOperator' => $bcOperator
