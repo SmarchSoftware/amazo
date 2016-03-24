@@ -44,7 +44,7 @@
 
     <div class="form-group {{ $errors->has('enabled') ? 'has-error' : ''}}">
         {!! Form::label('enabled', 'Enabled: ', ['class' => 'col-sm-3 control-label']) !!}
-        <div class="col-sm-3">
+        <div class="col-sm-6">
             <div class="btn-group" data-toggle="buttons">
               <label class="btn btn-primary">
                 {!! Form::radio('enabled',1, null, ['class' => 'form-control'] ) !!} Yes
@@ -58,10 +58,8 @@
                 <i class="fa fa-lg fa-question-circle"></i>
               </label>
             </div>
-        </div>
-        
-        <div class="col-sm-3 text-right">
-            <button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#collapseModifiers" aria-expanded="false" aria-controls="collapseModifiers"> <i class="fa fa-plus"></i> Add Damage Modifiers</a>
+
+            <button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#collapseModifiers" aria-expanded="false" aria-controls="collapseModifiers"> <i class="fa fa-plus"></i> Add Damage Modifiers</a>            
         </div>
         {!! $errors->first('enabled', '<div class="col-sm-6 col-sm-offset-3 text-danger">:message</div>') !!}
     </div>
@@ -86,41 +84,43 @@
                           <br />Additionals (+/-) are performed <strong>before</strong> multipliers (*).
                           </small>
                         </p>
+
+                        <p><button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#modifierInfo" aria-expanded="false" aria-controls="modifierInfo"> Close </button></p>
                     </div>
                         
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-xs-3 col-md-3">
                             <label class="text-muted">Damage Type</label>
                         </div>
 
-                        <div class="col-sm-2 text-center">
-                          <label class="text-muted">Amount (+ or -)</label>
-                        </div>
-
-                        <div class="col-sm-3 text-right">
+                        <div class="col-xs-3 col-md-3 text-right">
                           <label class="text-muted">Modifier Type</label>
                         </div>
 
-                        <div class="col-sm-3 text-right">
+                        <div class="col-xs-3 col-md-3 text-right">
+                          <label class="text-muted">Amount (+ or -)</label>
+                        </div>
+
+                        <div class="col-xs-3 col-md-3 text-right">
                           <label class="text-muted">Base</label>
                         </div>
                     </div>
 
                     @for ($i = 0; $i < 3; $i++)
                     <div class="form-group">
-                        <div class="col-sm-4">
+                        <div class="col-xs-3 col-md-3">
                             {!! Form::select("modifier[$i][damage]", $amazo, null, ['placeholder' => 'None', 'class' => 'form-control'] ) !!}
                         </div>
 
-                        <div class="col-sm-2">
-                            {!! Form::number("modifier[$i][amount]", null, ['placeholder' => 'None', 'class' => 'form-control', 'step'=>'any'] ) !!}
-                        </div>
-
-                        <div class="col-sm-3">
+                        <div class="col-xs-3 col-md-3">
                             {!! Form::select("modifier[$i][type]", array('*'=>'Multiplier (*)','+'=>'Additive (+/-)'), null, ['placeholder' => 'None', 'class' => 'form-control'] ) !!}
                         </div>
 
-                        <div class="col-sm-3">                        
+                        <div class="col-xs-3 col-md-3">
+                            {!! Form::number("modifier[$i][amount]", null, ['placeholder' => 'None', 'class' => 'form-control', 'step'=>'any'] ) !!}
+                        </div>
+
+                        <div class="col-xs-3 col-md-3">                        
                             {!! Form::select("modifier[$i][cumulative]", array('0'=>'On Base','1'=>'On Total'), 0, ['class' => 'form-control'] ) !!}
                         </div>
                     </div>
