@@ -31,25 +31,32 @@
         // addModifierDamage() returns an object with all the modifier and damage information
         dd( $resource->addModifierDamage($damage) );
         // returns
-        public startingDamage -> integer 100
-        public allModifierDamage -> integer 200
+        public startingDamage -> float 100
+        public modifiersDamage -> float 200
+        public modifiersDamageMath -> string(3) "200"
         public totalDamage -> integer 300
+        public totalDamageMath -> string(11) "100 + (200)"
           →public modifiers -> stdClass(1)
-            →public 0 -> stdClass(6)
-            public message -> string(48) "fdsadf generated 200 damage (100 * 2.0000)"
-            public parentName -> string(8) "Cold"
-            public modifierName -> string(6) "Ice"
-            public modifierAmount -> string(9) "2.0000"
-            public modifierDamage -> string(6) "200"
-            public modifierCumulative -> bool FALSE
-            public modifierCumulativeAsString -> string(4) "Base"
-            →public operator -> stdClass(2)
-              public stringOperator -> string(1) "*"
+            →public 0 -> stdClass(8)
+              public message -> string(42) "Ice generated 200 damage (100 * 2.0000)"
+              public parentName -> string(4) "Cold"
+              public name -> string(3) "Ice"
+              public modifierAmount -> float 2.0000
+              public damage -> float 200
+              public cumulative -> bool FALSE
+              public cumulativeAsString -> string(4) "Base"
+              public operator -> string(1) "*"
               public bcOperator -> string(5) "bcmul"
         </pre>
         </p>
 
-        <p class="col-xs-12 col-lg-12 bg-warning"><i class="fa fa-lightbulb-o fa-2x fa-pull-left fa-fw"></i> If you have more than one modifier, you can decide if the modifier applies to the base/starting damage or the total damage. All "Cumulative" modifiers run <strong>after</strong> base modifiers have already run.</p>
+        <p class="col-xs-12 col-lg-12 bg-warning"><small>
+          <strong>Notes</strong>
+          <br />Modifiers can apply to either the base/starting damage or the total damage ("cumulative").
+          <br />"Cumulative" modifiers run <strong>after</strong> base modifiers.
+          <br />Additionals (+/-) are performed <strong>before</strong> multipliers (*).
+          </small>
+        </p>
 
         <p><button type="button" class="btn btn-sm btn-default" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Toggle Example </button></p>
       </div>
@@ -124,7 +131,7 @@
     <div class="col-md-12 col-sm-12 col-xs-12">
       <div class="panel panel-primary">
         <div class="panel-heading clearfix">
-          <h3 class="panel-title"><i class="fa fa-users fa-lg"></i> Current Modifiers for {{ $resource->name }}
+          <h3 class="panel-title"><i class="fa fa-users fa-lg"></i> Current Modifiers for {{ $resource->name }} <small class="hidden-xs"><em>...and the order that they are performed.</em></small>
           </h3>
         </div>
         
@@ -139,7 +146,7 @@
                 <label class="text-muted"><span class="hidden-xs">Mod</span></label>
               </div>
 
-              <div class="col-xs-2 text-center">
+              <div class="col-xs-2 text-right">
                 <label class="text-muted"><span class="hidden-xs">Amount </span>+/-</label>
               </div>
 
@@ -151,7 +158,7 @@
                     <span class="hidden-xs hidden-sm">Delete</span></label>
               </div>
             </div>
-            @forelse($resource->modifiers as $item)
+            @forelse($resource->modifiers->sortBy('cumulative') as $item)
               <div class="row">
                 <div class="col-xs-5">
                   <label>{{ $item->damageType->name }}</label>
@@ -161,7 +168,7 @@
                   <label>{{ $item->mod_type }}</label>
                 </div>
 
-                <div class="col-xs-2">
+                <div class="col-xs-2 text-right">
                   <label>{{ $item->amount }}</label>
                 </div>
 
@@ -191,15 +198,18 @@
           <div class="row">
             <div class="col-sm-12 text-primary text-center">
             @if (count($resource->modifiers) > 0)
-              <em>With a starting damage of 100, these modifiers would add {!! $modDamage->allModifierDamage !!} damage for a total of {!! $modDamage->totalDamage !!} </em> <button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#collapseExplain" aria-expanded="false" aria-controls="collapseExplain"> Explain </button>
+              <em>With a starting damage of 100, these modifiers would add {!! $modDamage->modifiersDamage !!} damage for a total of {!! $modDamage->totalDamage !!} </em> <button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#collapseExplain" aria-expanded="false" aria-controls="collapseExplain"> Explain </button>
             </div>
           </div>
 
           <div class="row">
             <div class="col-xs-11 col-xs-offset-1 col-sm-10 col-sm-offset-2 col-md-9 col-md-offset-3 text-default collapse" id="collapseExplain">
+              <ul>
               @foreach ($modDamage->modifiers as $mod)
                <li>{!! $mod->message !!}</li>
               @endforeach
+               <li>{!!  $modDamage->totalDamageMath !!} = {!! $modDamage->totalDamage !!}</li>
+              </ul>
             @else
               <em>There are no modifiers for {{ $resource->name }}.</em>
             @endif

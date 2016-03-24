@@ -16,6 +16,7 @@ class Amazo extends Model
     const ATTR_NOTES = 'notes';
     const ATTR_ENABLED = 'enabled';
 
+
     /**
      * The database table used by the model.
      *
@@ -38,55 +39,82 @@ class Amazo extends Model
     
 
     /**
-     * Get the mods for the damage type
+     * Get the mods for the damage type 
+     * with custom orderby for base
+     * before cumulative total and
+     * addition before multiplier
+     * 
      * 
      * @return object
      */
     public function modifiers()
     {
-        return $this->hasMany('Smarch\Amazo\Models\AmazoMods', 'parent_id');
+        return $this->hasMany('Smarch\Amazo\Models\AmazoMods', 'parent_id')->orderByRaw( \DB::raw("cumulative, FIELD(mod_type, '+', '*')") );
     }
 
+
+    /**
+     * Starting with the resource's decided damage
+     * determines modifier(s)dammage.
+     *
+     * Returns early if no modifiers are found
+     * 
+     * @param integer $damage [description]
+     *
+     * @return object
+     */
     public function addModifierDamage($damage = 0)
     {
-        $mods = $this->modifiers->sortBy('cumulative');
-
+        $mods = $this->modifiers;
         if (count($mods) <= 0) {
             return;
         }
 
         $object = new \stdClass();
-        $object->startingDamage = $damage;
-        $object->allModifierDamage = 0;
+        $object->startingDamage = (float) $damage;
+        $object->modifiersDamage = 0;
+        $object->modifiersDamageMath = '';
 
         foreach($mods as $item) {
-            $damageToModify = ($item->cumulative) ? ($object->startingDamage + $object->allModifierDamage) : $object->startingDamage;
+            $damageToModify = ($item->cumulative) ? ($object->startingDamage + $object->modifiersDamage) : $object->startingDamage;
             $modifierDamage = $this->doModMath($damageToModify, $item->amount, $item->mod_type);
             $mathText = ($item->mod_type == "+") ? $item->mod_type." ".$item->amount : $damageToModify. " ".$item->mod_type." ".$item->amount;
 
             $props[] = (object) [ 
                 'message' => $item->damageType->name . " generated " . $modifierDamage . " damage (".$mathText.")",
                 'parentName' => $this->getName(),
-                'modifierName' => $item->damageType->name,
-                'modifierAmount' => $item->amount,
-                'modifierDamage' => $modifierDamage,
-                'modifierCumulative' => $item->cumulative,
-                'modifierCumulativeAsString' => $item->CumulativeString,
-                'operator' =>  $item->mod_type
+                'name' => $item->damageType->name,
+                'modifierAmount' => (float) $item->amount,
+                'damage' => $modifierDamage,
+                'cumulative' => $item->cumulative,
+                'cumulativeAsString' => $item->CumulativeString,
+                'operator' =>  $item->mod_type,
+                'bcOperator' =>  ($item->mod_type === "+") ? "bcadd" : "bcmul" ,
             ];
 
-            $object->allModifierDamage += $modifierDamage;
+            $object->modifiersDamage += $modifierDamage;
+            $object->modifiersDamageMath .= "$modifierDamage + ";
         }
 
-        $object->totalDamage = ($object->startingDamage + $object->allModifierDamage);
+        $object->modifiersDamageMath = substr($object->modifiersDamageMath,0,-3);
+        $object->totalDamage = ($object->startingDamage + $object->modifiersDamage);
+        $object->totalDamageMath = "$object->startingDamage + ($object->modifiersDamageMath)";
         $object->modifiers = (object) $props;
 
         return $object;
     }
 
+
+    /**
+     * Do the math (+ or *) for each modifier
+     * @param  integer $damage   damage to modify
+     * @param  integer $amount   modifier amount
+     * @param  string  $operator "+" or "*"
+     * @return float
+     */
     protected function doModMath($damage=1, $amount=1, $operator="+")
     {
-        return ($operator == "+") ? $amount : ($damage * $amount) ;
+        return (float) ($operator == "+") ? $amount : ($damage * $amount) ;
     }
 
 

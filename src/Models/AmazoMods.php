@@ -46,10 +46,6 @@ class AmazoMods extends Model
     ];
 
 
-    protected $attributes = array(
-        'CumulativeString' => '',
-    );
-
     /**
      * Get the mods for the damage type
      * 

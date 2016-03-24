@@ -71,36 +71,57 @@
         <div class="col-sm-6">
             <div class="panel panel-default" style="margin-bottom:0;">
                 <div class="panel-heading">
-                   <h2 class="panel-title">You can add up to 3 modifiers now. You can always add more later.</h2>
+                   <h2 class="panel-title">You can add up to 3 modifiers now. You can always add more later.<button type="button" class="btn btn-xs btn-default pull-right" data-toggle="collapse" data-target="#modifierInfo" aria-expanded="false" aria-controls="modifierInfo"><i class="fa fa-question"></i> </button></h2>
                 </div>
 
                 <div class="panel-body">
+                    <div class="collapse" id="modifierInfo">
+                        <p><strong>Damage modifiers are completely optional.</strong> For example, say you are creating a damage type called "Frozen". And you already have a damage type created called "Brutal". You would like your new "Frozen" damage to ALSO give Brutal damage of twice the Frozen damage. You would create a modifier here by selecting "Brutal" and "Multiplier" with an amount of 2 and since you *only* want the damage to apply directly to the Frozen damage <em>(so "Brutal" would not modify any other damage from other modifiers you may create)</em> you would also select "On Base". So if your code deals Frozen damage of 100, and your randomizer says "Brutal" also applied, another 200 damage could be added to the total.</p>
+                        </p>
+
+                        <p class="col-xs-12 col-lg-12 bg-warning"><small>
+                          <strong>Notes</strong>
+                          <br />Modifiers can apply to either the base/starting damage or the total damage ("cumulative").
+                          <br />"Cumulative" modifiers run <strong>after</strong> base modifiers.
+                          <br />Additionals (+/-) are performed <strong>before</strong> multipliers (*).
+                          </small>
+                        </p>
+                    </div>
+                        
                     <div class="row">
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                             <label class="text-muted">Damage Type</label>
                         </div>
 
-                        <div class="col-sm-3 text-center">
+                        <div class="col-sm-2 text-center">
                           <label class="text-muted">Amount (+ or -)</label>
                         </div>
 
-                        <div class="col-sm-4 text-right">
+                        <div class="col-sm-3 text-right">
                           <label class="text-muted">Modifier Type</label>
+                        </div>
+
+                        <div class="col-sm-3 text-right">
+                          <label class="text-muted">Base</label>
                         </div>
                     </div>
 
                     @for ($i = 0; $i < 3; $i++)
                     <div class="form-group">
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                             {!! Form::select("modifier[$i][damage]", $amazo, null, ['placeholder' => 'None', 'class' => 'form-control'] ) !!}
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             {!! Form::number("modifier[$i][amount]", null, ['placeholder' => 'None', 'class' => 'form-control', 'step'=>'any'] ) !!}
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             {!! Form::select("modifier[$i][type]", array('*'=>'Multiplier (*)','+'=>'Additive (+/-)'), null, ['placeholder' => 'None', 'class' => 'form-control'] ) !!}
+                        </div>
+
+                        <div class="col-sm-3">                        
+                            {!! Form::select("modifier[$i][cumulative]", array('0'=>'On Base','1'=>'On Total'), 0, ['class' => 'form-control'] ) !!}
                         </div>
                     </div>
                     @endfor
