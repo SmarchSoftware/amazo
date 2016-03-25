@@ -22,7 +22,7 @@ class AmazoServiceProvider extends ServiceProvider
         
         // views
         $this->publishes([
-            __DIR__.'/Views' => base_path('resources/views/smarch/amazo')
+            __DIR__.'/Views' => base_path('resources/views/vendor/amazo')
         ], 'views');
 
         // migrations
