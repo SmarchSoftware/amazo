@@ -14,12 +14,11 @@ use Smarch\Amazo\Requests\StoreRequest;
 use Smarch\Amazo\Requests\UpdateRequest;
 use Smarch\Amazo\Requests\UpdateModsRequest;
 
-use Smarch\Amazo\Traits\SmarchACLTrait;
+use Smarch\Omac\OmacTrait;
 
 class AmazoController extends Controller
 {
-
-    use SmarchACLTrait;
+    use OmacTrait;
 
     var $acl = false;
     var $driver = 'laravel';
