@@ -62,7 +62,7 @@ return [
     | Pagination
     |--------------------------------------------------------------------------
     |
-    | How many currencies to load per page?
+    | How many resources to load per page?
     |
     */   
    'pagination' => '15',
@@ -72,11 +72,11 @@ return [
     | Authorization ?
     |--------------------------------------------------------------------------
     |
-    | Out of the box, amazo can optionally use Laravel's built in authorization
+    | Out of the box, Amazo can optionally use Laravel's built in authorization
     | methods. If you wish to make use of them, switch the enable param
     | to true and then use the permissions that your app requires.
     |
-    | Note : amazo itself  does not provide authorization and when/if you
+    | Note : Amazo itself does not provide authorization and when/if you
     | decide to enable the ACL options, the Auth::user() method "can"
     | must already have those permissions defined. Installing and 
     | enabling authorization is outside Amazo's scope.
@@ -85,10 +85,12 @@ return [
     | 'enable' true/false
     | 'driver' [ "laravel" or "shinobi" or "sentinel" ]
     | 'index' is to view the index page.
-    | 'create' is to create new currencies.
-    | 'show' is to view individual currencies.
-    | 'edit' is to change existing currencies.
-    | 'destroy' is to delete existing currencies.
+    | 'create' is to create new resources.
+    | 'show' is to view individual resources.
+    | 'edit' is to change existing resources.
+    | 'destroy' is to delete existing resources.
+    | 'destroy_mod' is to delete a modifier
+    | 'add_mod' is to add a modifier
     |
     */  
    'acl' => [
@@ -100,7 +102,8 @@ return [
         'edit'      => 'amazo.edit',
         'destroy'   => 'amazo.destroy',
         'destroy_mod' => 'amazo.destroy.mod',
-        'add_mod'   => 'amazo.add.mod'
+        'add_mod'   => 'amazo.add.mod',
+        'show_mods' => 'amazo.show.mods'
     ],
 
 
@@ -111,7 +114,7 @@ return [
     | Prefix :
     |-------------------------
     |
-    | If you want to prefix all your amazo routes, enter the prefix here.
+    | If you want to prefix all your Amazo routes, enter the prefix here.
     | https://laravel.com/docs/5.2/routing#route-group-prefixes for info.
     | 
     | i.e 'route_prefix' => 'admin' will change your urls to look

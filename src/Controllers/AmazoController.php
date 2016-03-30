@@ -194,7 +194,7 @@ class AmazoController extends Controller
      */
     public function modifiers($id)
     {
-        if ( $this->checkAccess( config('amazo.acl.show') ) ) {
+        if ( $this->checkAccess( config('amazo.acl.show_mods') ) ) {
             $resource = Amazo::findOrFail($id);
             $amazo = Amazo::lists('name','id');
             $modDamage = $resource->addModifierDamage('100');
