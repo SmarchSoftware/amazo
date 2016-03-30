@@ -15,8 +15,8 @@ class CreateAmazosTable extends Migration
         
             Schema::create('damage_types', function(Blueprint $table) {
                 $table->increments('id');
-                $table->string('name')->required();
-                $table->string('slug')->required();
+                $table->string('name')->length(255)->required();
+                $table->string('slug')->length(32)->required();
                 $table->string('notes');
                 $table->boolean('enabled');
 
