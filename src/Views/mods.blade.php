@@ -120,7 +120,7 @@
         </div>
 
         <div class="panel-footer">
-          <div class="text-muted text-center"><em>Added modifiers *must* have a value in all 3 fields.</em></div>
+          <div class="text-muted text-center"><em>Added modifiers *must* have a value in all 4 fields.</em></div>
         </div>
       </div>
     </div>
