@@ -1,5 +1,3 @@
-
-
 ![](http://i.imgur.com/4QHCz3r.png)
 
 This is probably only of use to me, but I have need of it in multiple apps so I packaged it up in case you want it too. :)
