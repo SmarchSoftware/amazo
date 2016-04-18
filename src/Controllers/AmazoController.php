@@ -196,7 +196,7 @@ class AmazoController extends Controller
     {
         if ( $this->checkAccess( config('amazo.acl.show_mods') ) ) {
             $resource = Amazo::findOrFail($id);
-            $amazo = Amazo::lists('name','id');
+            $amazo = Amazo::where('id','!=',$id)->lists('name','id');
             $modDamage = $resource->addModifierDamage('100');
             return view( config('amazo.views.modifiers'), compact('resource', 'amazo', 'modDamage') );
         }
@@ -229,6 +229,9 @@ class AmazoController extends Controller
             }
             
             foreach($filtered as $mod) {
+                if ($id == $mod['damage']) {
+                    continue;
+                }
                 $data = [ 
                     'damage_type_id' => $mod['damage'],
                     'mod_type' => $mod['type'],
