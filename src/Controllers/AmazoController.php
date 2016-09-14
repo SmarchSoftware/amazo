@@ -70,17 +70,11 @@ class AmazoController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        // Modify the request
-        $request['attending'] = true;
-
-        // Execute validation manually
-        app('Smarch\Amazo\Requests\StoreRequest');
-
         if ( $this->checkAccess( config('amazo.acl.create') ) ) {
             $data = Amazo::create($request->all());
-            $this->updateModifiers($data->id, $request);        
+            $this->updateModifiers($data->id, $request, 1);        
             return redirect()->route('amazo.index')
                     ->with( ['flash' => ['message' => "<i class='fa fa-check-square-o fa-1x'></i> Success! Damage type created.", 'level' => "success"] ] );
         }
@@ -211,7 +205,7 @@ class AmazoController extends Controller
      *
      * @return Response
      */
-    public function updateModifiers($id, Request $request)
+    public function updateModifiers($id, Request $request, $new = 0)
     {
         // Modify the request
         $request['attending'] = true;
@@ -223,6 +217,12 @@ class AmazoController extends Controller
             $filtered = array_filter( array_map('array_filter', $request->modifier) );
 
             if ( empty( $filtered ) ) {
+                
+                // new requests can be empty
+                if ($new == 1) {
+                    return;
+                }
+
                 return redirect()
                     ->back()
                     ->withErrors("No damage modifiers selected.");
