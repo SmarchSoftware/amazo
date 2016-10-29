@@ -29,25 +29,26 @@ This page is intended for installation, please check out the [wiki](https://gith
 Amazo uses the [HTML Forms](https://laravelcollective.com/docs/5.1/html) package from the "Laravel Collective" for Html & Form rendering so composer will install that as well if you don't already have it installed _(you probably do...or should)_. Once composer has installed the necessary packages for Amazo to function you need to open your laravel config page for service providers and add Amazo _(and if necessary the Laravel Collective Html provider)_. To properly function you need to have both service providers referenced : [HTML Forms](https://laravelcollective.com/docs/5.1/html) and Amazo.
 
 *config/app.php*
-       
+```php
        /*
         * Third Party Service Providers
         */
         Collective\Html\HtmlServiceProvider::class, // For Amazo to function
         Smarch\Amazo\AmazoServiceProvider::class, // For Amazo
+```
 
 #### :pencil: Facades
 Next you will need to add the Amazo and Forms Facades to your config app file.
 
 *config/app.php*
-
+```php
         /*
         * Third Party Service Providers
         */
         'Form'  => Collective\Html\FormFacade::class,	// required for Amazo Forms
         'HTML'  => Collective\Html\HtmlFacade::class,	// required for Amazo Forms
         'Amazo'	=> Smarch\Amazo\Facades\AmazoFacade::class, // required for Amazo:: 
-
+```
 #### :card_index: Database Migrations
 
 Next you need to add the migration to create the Amazo "damage types" table and the Amazo "damage modififers" table to hold your all your damage tyep information. From your command prompt (wherever you run your artisan commands) enter the following command <kbd>php artisan vendor:publish</kbd>. This will create the Amazo config file *(which allows you to define any views / permissions you wish to change from their defaults)*.
